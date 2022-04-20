@@ -15,14 +15,17 @@ export function getValueFromHash(key: string): string|null {
     if(value === null || value === undefined) return null;
     return value;
 }
-export function updateHashValue(key: string, value: string|null): void {
+export function updatedHashValue(key: string, value: string|null): string {
     const params = getHash();
     if(value == null) {
         params.delete(key);
     } else {
         params.set(key, value);
     }
-    history.replaceState({}, '', '#' + params.toString());
+    return params.toString();
+}
+export function updateHashValue(key: string, value: string|null): void {
+    history.replaceState({}, '', '#' + updatedHashValue(key, value));
 }
 
 export function jsonParserWithDefault<T>(defaultValue: T): (value: string|null) => T {
